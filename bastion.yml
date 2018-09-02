@@ -1,10 +1,7 @@
 - hosts: bastion
-  vars:
-    ansible_python_interpreter: "/usr/bin/env python3"
-    user: user
-    bastion_ssh_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
-    enable_root: true
   tasks:
+    - include_vars:
+        file: vars.yml
     - ping:
     - pkgng:
         name: openssh-portable
@@ -24,11 +21,10 @@
         key: "{{ bastion_ssh_key }}"
         exclusive: true
 
-
 - hosts: clients
-  vars:
-    ansible_python_interpreter: "/usr/bin/env python3"
   tasks:
+    - include_vars:
+        file: vars.yml
     - ping:
     - apt:
         name: openssh-server
