@@ -1,0 +1,11 @@
+- hosts: bastion
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python3"
+  tasks:
+    - ping:
+
+- hosts: clients
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python3"
+  tasks:
+    - ping:
