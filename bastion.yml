@@ -1,4 +1,6 @@
 - hosts: bastion
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python3"
   tasks:
     - include_vars:
         file: vars.yml
@@ -20,8 +22,16 @@
         user: root
         key: "{{ bastion_ssh_key }}"
         exclusive: true
+    - service:
+        name: sshd
+        state: reloaded
+
 
 - hosts: clients
+  become: yes
+  become_user: root
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python3"
   tasks:
     - include_vars:
         file: vars.yml
@@ -35,3 +45,6 @@
         dest: /etc/ssh/sshd_config
         validate: /usr/sbin/sshd -t -f %s
         backup: yes
+    - service:
+        name: ssh
+        state: reloaded
