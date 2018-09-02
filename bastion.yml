@@ -1,8 +1,29 @@
 - hosts: bastion
   vars:
     ansible_python_interpreter: "/usr/bin/env python3"
+    user: user
+    ssh_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+    enable_root: true
   tasks:
     - ping:
+    - pkgng:
+        name: openssh-portable
+    - user:
+        name: "{{ user }}"
+    - template:
+        src: sshd_config_bastion
+        dest: /etc/ssh/sshd_config
+        validate: /usr/sbin/sshd -t -f %s
+        backup: yes
+    - authorized_key:
+        user: "{{ user }}"
+        key: "{{ ssh_key }}"
+        exclusive: true
+    - authorized_key:
+        user: root
+        key: "{{ ssh_key }}"
+        exclusive: true
+
 
 - hosts: clients
   vars:
