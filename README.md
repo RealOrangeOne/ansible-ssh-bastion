@@ -1,6 +1,17 @@
 # Ansible SSH Config
 Ansible playbook to setup an SSH bastion server and clients.
 
+## Security Features
+
+Much of the security hardening work comes from https://joscor.com/blog/hardening-openssh-server-ubuntu-14-04/.
+
+- Non-standard SSH port for bastion
+- Require key and password for bastion connections
+- 5 minute connection timeout
+- Login within 30 seconds of initial connection
+- Disable SSHv1
+- Separate key for connection to bastion and further hosts
+
 ## Usage
 
 1. Modify the values in `vars.yml` to match your requirements:
@@ -8,6 +19,5 @@ Ansible playbook to setup an SSH bastion server and clients.
     - `bastion_ssh_key` is the key to use to connect to the bastion machine.
     - `enable_root` enables SSH connections as root to the bastion
     - `bastion_ip` is the IP of the bastion, to be baked into the config of the clients.
-
 2. Populate `hosts` with your required hosts. A single `bastion`, and however many `clients`.
 3. Run the playbook with `ansible-playbook bastion.yml -i hosts --ask-pass -K`
