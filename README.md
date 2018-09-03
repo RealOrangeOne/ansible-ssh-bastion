@@ -3,14 +3,15 @@ Ansible playbook to setup an SSH bastion server and clients.
 
 ## Security Features
 
-Much of the security hardening work comes from https://joscor.com/blog/hardening-openssh-server-ubuntu-14-04/.
-
 - Non-standard SSH port for bastion
 - Require key and password for bastion connections
 - 5 minute connection timeout
 - Login within 30 seconds of initial connection
 - Disable SSHv1
 - Separate key for connection to bastion and further hosts
+- No warnings from [`ssh-audit`](https://github.com/arthepsy/ssh-audit)
+
+Some of the hardening and configuration is based on https://joscor.com/blog/hardening-openssh-server-ubuntu-14-04/.
 
 ## Usage
 
