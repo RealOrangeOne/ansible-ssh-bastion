@@ -9,6 +9,8 @@ HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_dsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
 
+HostKeyAlgorithms ssh-rsa,rsa-sha2-512,rsa-sha2-256
+
 # Privilege Separation is turned on for security
 UsePrivilegeSeparation yes
 
@@ -33,14 +35,14 @@ StrictModes yes
 
 # Message Authentication Code (Hash, only SHA2-512)
 # SHA-256 included for compat with PuTTY-WinCrypt clients
-MACs hmac-sha2-512,hmac-sha2-256
+MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,umac-128-etm@openssh.com
 
 # Ciphers (only secure AES-256)
-Ciphers aes256-cbc,aes256-ctr
+Ciphers aes256-ctr,aes128-gcm@openssh.com,aes128-ctr,aes192-ctr,aes256-gcm@openssh.com,chacha20-poly1305@openssh.com
 
 # Key Exchange algorithms (Elliptic Curve Diffie-Hellman)
 # DH-SHA-256 included for compat with PuTTY-WinCrypt clients
-KexAlgorithms ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256
+KexAlgorithms diffie-hellman-group-exchange-sha256,curve25519-sha256@libssh.org
 
 # Don’t read the user’s ~/.rhosts and ~/.shosts files
 IgnoreRhosts yes
