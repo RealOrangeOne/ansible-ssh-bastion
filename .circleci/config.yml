@@ -7,4 +7,4 @@ jobs:
         steps:
             - checkout
             - run: sudo pip install ansible
-            - run: ansible-playbook --syntax-check bastion.yml
+            - run: ansible-playbook --syntax-check bastion.yml -i hosts
