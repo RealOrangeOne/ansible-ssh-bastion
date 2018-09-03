@@ -1,0 +1,10 @@
+version: 2
+jobs:
+    build:
+        docker:
+            - image: circleci/python:3-stretch
+        working_directory: ~/ansible-ssh-bastion
+        steps:
+            - checkout
+            - run: pip install ansible
+            - run: ansible-playbook --syntax-check bastion.yml
