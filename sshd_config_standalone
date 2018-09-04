@@ -1,0 +1,18 @@
+# TCP port to bind to
+# Change to a high/odd port if this server is exposed to the internet directly
+# Port 22
+Port 22
+
+# Deny all other users besides the following
+AllowUsers {{ user }} {% if enable_root %}root{% endif %}
+
+# Disable root SSH access
+PermitRootLogin {% if enable_root %}yes{% else %}no{% endif %}
+
+# Public key authentication + Password authentication
+# Two-Factor Authentication in OpenSSH v6.2+
+RSAAuthentication yes
+PubkeyAuthentication yes
+PasswordAuthentication no
+
+{% include "sshd_config_common" %}

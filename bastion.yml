@@ -48,3 +48,26 @@
     - service:
         name: ssh
         state: reloaded
+
+
+- hosts: standalone
+  become: yes
+  become_user: root
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python3"
+  tasks:
+    - include_vars:
+        file: vars.yml
+    - ping:
+    - apt:
+        name: openssh-server
+    - user:
+        name: "{{ user }}"
+    - template:
+        src: sshd_config_standalone
+        dest: /etc/ssh/sshd_config
+        validate: /usr/sbin/sshd -t -f %s
+        backup: yes
+    - service:
+        name: ssh
+        state: reloaded
