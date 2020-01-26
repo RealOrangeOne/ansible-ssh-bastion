@@ -12,7 +12,6 @@ PermitRootLogin {% if enable_root %}yes{% else %}no{% endif %}
 # Two-Factor Authentication in OpenSSH v6.2+
 RSAAuthentication yes
 PubkeyAuthentication yes
-PasswordAuthentication yes
-AuthenticationMethods password,publickey
+AuthenticationMethods publickey
 
 {% include "sshd_config_common" %}
